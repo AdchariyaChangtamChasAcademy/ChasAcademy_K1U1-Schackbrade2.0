@@ -6,6 +6,7 @@
         {
             // Schackbräde
             // Rad 2
+            // Rad 3
         }
     }
 }
