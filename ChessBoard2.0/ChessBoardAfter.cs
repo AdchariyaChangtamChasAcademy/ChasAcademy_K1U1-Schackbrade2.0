@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ChessBoard2._0
 {
-    public class ChessBoard
+    internal class ChessBoardAfter
     {
-        public ChessBoard() { }
-
         public void ReadSize()
         {
-            // Revised version of ReadSize()
-
             while (true)
             {
                 Console.WriteLine("Size of board? (3–50) or [Q] to quit");
@@ -41,25 +33,15 @@ namespace ChessBoard2._0
                 Console.WriteLine($"\nInput symbol for BLACK squares (default: 'B'):");
                 Console.Write("B: ");
                 string blackSquare = Console.ReadLine();
-
-                // ALTER: Added check for non case sensitive check for the letter "b" that can be used as default as well as empty input
-                if (string.IsNullOrWhiteSpace(blackSquare) || string.Equals(blackSquare, "b", StringComparison.OrdinalIgnoreCase))
-                {
-                    // ALTER: Swapped "B" to "\u25A0" because I wanted a black square symbol to be default and not the letter B
-                    blackSquare = "\u25A0";
-                }
+                if (string.IsNullOrWhiteSpace(blackSquare))
+                    blackSquare = "B";
 
                 // Ask for white square symbol
                 Console.WriteLine($"\nInput symbol for WHITE squares (default: 'W'):");
                 Console.Write("W: ");
                 string whiteSquare = Console.ReadLine();
-
-                // ALTER: Added check for non case sensitive check for the letter "w" that can be used as default as well as empty input
-                if (string.IsNullOrWhiteSpace(whiteSquare) || string.Equals(whiteSquare, "w", StringComparison.OrdinalIgnoreCase))
-                {
-                    // ALTER: Swapped "B" to "\u25A0" because I wanted a white square symbol to be default and not the letter W
-                    whiteSquare = "\u25A1";
-                }
+                if (string.IsNullOrWhiteSpace(whiteSquare))
+                    whiteSquare = "W";
 
                 // Prevent same symbols (optional safeguard)
                 if (blackSquare == whiteSquare)
@@ -71,12 +53,19 @@ namespace ChessBoard2._0
                 // Render the board
                 RenderBoard(boardSize, blackSquare, whiteSquare);
             }
+
+            // Reasoning for why this is better than before from ChatGPT
+            /*
+             * What’s improved here:
+             * ✅ Quitting is immediate — no nested ifs.
+             * ✅ Default values shown in the prompt (B and W).
+             * ✅ Input validation is clear and user-friendly.
+             * ✅ Safety check so black/white squares can’t be identical (optional but helpful).
+             */
         }
 
         public void RenderBoard(int boardSize, string symbolBlack, string symbolWhite)
         {
-            // Revised version of RenderBoard()
-
             // Default symbols if none are provided
             var black = string.IsNullOrEmpty(symbolBlack) ? "\u25A0" : symbolBlack;
             var white = string.IsNullOrEmpty(symbolWhite) ? "\u25A1" : symbolWhite;
@@ -97,7 +86,13 @@ namespace ChessBoard2._0
 
             // Output to console
             Console.WriteLine(boardString);
-            //// USED VERSION END ////
+
+            // Reasoning for why this is better than before from ChatGPT
+            /*
+             * Why this is better
+             * Removed duplication — just pick black and white once at the top.
+             * StringBuilder — faster and cleaner than many Console.Write.
+             */
         }
     }
 }
