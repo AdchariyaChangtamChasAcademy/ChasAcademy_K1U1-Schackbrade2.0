@@ -33,7 +33,7 @@ namespace ChessBoard2._0
                 // Validate board size
                 if (!int.TryParse(input, out int boardSize) || boardSize < 3 || boardSize > 50)
                 {
-                    Console.WriteLine("❌ Invalid input. Please enter a number between 3 and 50.");
+                    Console.WriteLine("Invalid input. Please enter a number between 3 and 50.");
                     continue;
                 }
 
@@ -64,7 +64,7 @@ namespace ChessBoard2._0
                 // Prevent same symbols (optional safeguard)
                 if (blackSquare == whiteSquare)
                 {
-                    Console.WriteLine("❌ Black and White squares cannot use the same symbol. Try again!");
+                    Console.WriteLine("Black and White squares cannot use the same symbol. Try again!");
                     continue;
                 }
 
@@ -97,7 +97,6 @@ namespace ChessBoard2._0
 
             // Output to console
             Console.WriteLine(boardString);
-            //// USED VERSION END ////
         }
     }
 }
